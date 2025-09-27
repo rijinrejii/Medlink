@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: medlink-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: medlink_db
+      MYSQL_USER: medlink_user
+      MYSQL_PASSWORD: medlink_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - medlink-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+      interval: 10s
+
+  medlink-app:
+    build: .
+    container_name: medlink-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/medlink_db
+      SPRING_DATASOURCE_USERNAME: medlink_user
+      SPRING_DATASOURCE_PASSWORD: medlink_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - medlink-network
+
+volumes:
+  mysql_data:
+
+networks:
+  medlink-network:
+    driver: bridge

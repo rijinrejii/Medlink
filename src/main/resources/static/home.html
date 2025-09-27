@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedLink - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h1 {
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-links button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links button:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        #welcomeMessage {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .section {
+            padding: 30px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .patient-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .patient-info p {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .form-container {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px 15px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .file-upload-label {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-download {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .record-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .record-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .record-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h1>MedLink Dashboard</h1>
+            <div class="nav-links">
+                <span id="welcomeMessage"></span>
+                <a href="balance.html">View Medical Records</a>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </nav>
+        
+        <div class="section">
+            <h2>Patient Information</h2>
+            <div id="patientInfo" class="patient-info"></div>
+        </div>
+        
+        <div class="section">
+            <h2>Add New Medical Record</h2>
+            <div class="form-container">
+                <form id="medicalRecordForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="diagnosis">Diagnosis *</label>
+                        <input type="text" id="diagnosis" name="diagnosis" required placeholder="Enter diagnosis">
+                    </div>
+                    <div class="form-group">
+                        <label for="symptoms">Symptoms</label>
+                        <textarea id="symptoms" name="symptoms" rows="3" placeholder="Describe symptoms (optional)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment">Treatment</label>
+                        <textarea id="treatment" name="treatment" rows="3" placeholder="Treatment details (optional)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorName">Doctor Name *</label>
+                        <input type="text" id="doctorName" name="doctorName" required placeholder="Enter doctor's name">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitDate">Visit Date *</label>
+                        <input type="datetime-local" id="visitDate" name="visitDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileUpload">Upload File (Optional)</label>
+                        <div class="file-upload">
+                            <input type="file" id="fileUpload" name="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
+                            <label for="fileUpload" class="file-upload-label">
+                                📁 Click to upload file or drag and drop<br>
+                                <small>PDF, JPG, JPEG, PNG, DOC, DOCX, TXT (Max: 10MB)</small>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Add Medical Record</button>
+                </form>
+                <div id="recordMessage"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Recent Medical Records</h2>
+            <div id="recentRecords"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPatient = null;
+
+        window.onload = function() {
+            const patientData = localStorage.getItem('currentPatient');
+            if (!patientData) {
+                alert('Please login first');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentPatient = JSON.parse(patientData);
+            console.log('Current Patient:', currentPatient);
+            displayPatientInfo();
+            loadRecentRecords();
+            
+            // Set default visit date to now
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('visitDate').value = now.toISOString().slice(0, 16);
+        };
+
+        function displayPatientInfo() {
+            document.getElementById('welcomeMessage').textContent = 'Welcome, ' + currentPatient.firstName + ' ' + currentPatient.lastName;
+            
+            const patientInfoDiv = document.getElementById('patientInfo');
+            patientInfoDiv.innerHTML = 
+                '<p><strong>Name:</strong> ' + currentPatient.firstName + ' ' + currentPatient.lastName + '</p>' +
+                '<p><strong>Email:</strong> ' + currentPatient.email + '</p>' +
+                '<p><strong>Phone:</strong> ' + currentPatient.phoneNumber + '</p>' +
+                '<p><strong>Date of Birth:</strong> ' + (currentPatient.dateOfBirth || 'Not provided') + '</p>' +
+                '<p><strong>Address:</strong> ' + (currentPatient.address || 'Not provided') + '</p>' +
+                '<p><strong>Nationality:</strong> ' + (currentPatient.nationality || 'Not provided') + '</p>' +
+                '<p><strong>Gender:</strong> ' + (currentPatient.gender || 'Not provided') + '</p>';
+        }
+
+        async function loadRecentRecords() {
+            const recordsDiv = document.getElementById('recentRecords');
+            recordsDiv.innerHTML = '<div class="loading">Loading records...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/medical-records/patient/' + currentPatient.id);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const records = await response.json();
+                
+                if (records.length === 0) {
+                    recordsDiv.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No medical records found. Add your first record above!</p>';
+                } else {
+                    let recordsHTML = '';
+                    records.slice(0, 5).forEach(function(record) {
+                        let fileSection = '';
+                        if (record.fileName) {
+                            const fileSize = record.fileSize ? formatFileSize(record.fileSize) : 'Unknown size';
+                            fileSection = `
+                                <p><strong>Attached File:</strong> 
+                                    <span style="color: #667eea;">${record.fileName}</span> 
+                                    <small>(${fileSize})</small>
+                                    <button class="btn-download" onclick="downloadFile(${record.id})">Download</button>
+                                </p>`;
+                        }
+                        
+                        recordsHTML += `
+                            <div class="record-item">
+                                <h4>🏥 ${record.diagnosis}</h4>
+                                <p><strong>👨‍⚕️ Doctor:</strong> ${record.doctorName}</p>
+                                <p><strong>📅 Visit Date:</strong> ${new Date(record.visitDate).toLocaleString()}</p>
+                                <p><strong>🔍 Symptoms:</strong> ${record.symptoms || 'Not specified'}</p>
+                                <p><strong>💊 Treatment:</strong> ${record.treatment || 'Not specified'}</p>
+                                ${fileSection}
+                                <p><small><strong>Created:</strong> ${new Date(record.createdAt).toLocaleString()}</small></p>
+                            </div>`;
+                    });
+                    recordsDiv.innerHTML = recordsHTML;
+                }
+            } catch (error) {
+                console.error('Error loading records:', error);
+                recordsDiv.innerHTML = '<div class="message error">Error loading records: ' + error.message + '</div>';
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // File upload preview
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const label = document.querySelector('.file-upload-label');
+            
+            if (file) {
+                const fileSize = formatFileSize(file.size);
+                label.innerHTML = `
+                    📄 Selected: ${file.name}<br>
+                    <small>Size: ${fileSize} | Type: ${file.type}</small>
+                `;
+            } else {
+                label.innerHTML = `
+                    📁 Click to upload file or drag and drop<br>
+                    <small>PDF, JPG, JPEG, PNG, DOC, DOCX, TXT (Max: 10MB)</small>
+                `;
+            }
+        });
+
+        document.getElementById('medicalRecordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('recordMessage');
+            const fileInput = document.getElementById('fileUpload');
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'Adding Record...';
+            
+            // Clear previous messages
+            messageDiv.innerHTML = '';
+            
+            // Validate file size
+            if (fileInput.files[0] && fileInput.files[0].size > 10 * 1024 * 1024) {
+                messageDiv.innerHTML = '<div class="message error">File size must be less than 10MB</div>';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Add Medical Record';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('diagnosis', document.getElementById('diagnosis').value.trim());
+            formData.append('symptoms', document.getElementById('symptoms').value.trim() || '');
+            formData.append('treatment', document.getElementById('treatment').value.trim() || '');
+            formData.append('doctorName', document.getElementById('doctorName').value.trim());
+            formData.append('visitDate', document.getElementById('visitDate').value);
+            
+            if (fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+            }
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/medical-records/patient/' + currentPatient.id + '/with-file', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const savedRecord = await response.json();
+                    messageDiv.innerHTML = '<div class="message success">✅ Medical record added successfully!</div>';
+                    document.getElementById('medicalRecordForm').reset();
+                    
+                    // Reset file upload label
+                    document.querySelector('.file-upload-label').innerHTML = `
+                        📁 Click to upload file or drag and drop<br>
+                        <small>PDF, JPG, JPEG, PNG, DOC, DOCX, TXT (Max: 10MB)</small>
+                    `;
+                    
+                    // Reset visit date to now
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                    document.getElementById('visitDate').value = now.toISOString().slice(0, 16);
+                    
+                    loadRecentRecords();
+                    
+                    // Clear success message after 5 seconds
+                    setTimeout(() => {
+                        messageDiv.innerHTML = '';
+                    }, 5000);
+                } else {
+                    const errorText = await response.text();
+                    messageDiv.innerHTML = '<div class="message error">❌ Error: ' + errorText + '</div>';
+                }
+            } catch (error) {
+                console.error('Error adding record:', error);
+                messageDiv.innerHTML = '<div class="message error">❌ Failed to add medical record: ' + error.message + '</div>';
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = 'Add Medical Record';
+            }
+        });
+
+        async function downloadFile(recordId) {
+            try {
+                // Show loading state
+                const downloadButtons = document.querySelectorAll(`button[onclick="downloadFile(${recordId})"]`);
+                downloadButtons.forEach(btn => {
+                    btn.textContent = 'Downloading...';
+                    btn.disabled = true;
+                });
+
+                const response = await fetch('http://localhost:8080/api/medical-records/' + recordId + '/download');
+                
+                if (response.ok) {
+                    const contentDisposition = response.headers.get('Content-Disposition');
+                    let filename = 'download';
+                    if (contentDisposition) {
+                        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                        if (filenameMatch) {
+                            filename = filenameMatch[1];
+                        }
+                    }
+                    
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    alert('❌ File not found or error downloading file');
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('❌ Error downloading file: ' + error.message);
+            } finally {
+                // Reset button state
+                const downloadButtons = document.querySelectorAll(`button[onclick="downloadFile(${recordId})"]`);
+                downloadButtons.forEach(btn => {
+                    btn.textContent = 'Download';
+                    btn.disabled = false;
+                });
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentPatient');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
